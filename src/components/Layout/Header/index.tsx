@@ -3,6 +3,7 @@ import { DrawerMenu } from "../../DrawerMenu";
 import { styled, Card, Flex, Text } from "primithemes";
 import { Button } from "../../Button";
 import { Link } from "../../../i18n";
+import { Container } from "../../Container";
 
 const Trigger = styled.div`
   display: block;
@@ -42,37 +43,38 @@ interface HeaderProps {
 }
 
 export const Header: React.SFC<HeaderProps> = ({ logo, title, navItems }) => (
-  <Wrapper
-    bg="white.light"
-    p={3}
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    shadow={1}
-  >
-    <Link to="/">
-      <Brand alignItems="center">
-        {logo && (
-          <LogoWrapper alignItems="center">
-            <Logo src={logo.childImageSharp.fixed.src} />
-          </LogoWrapper>
-        )}
-        <BrandName display={["none", "block"]} fontSize={3} ml={3}>
-          {title}
-        </BrandName>
-      </Brand>
-    </Link>
-    <Flex>
-      <Nav>
-        {navItems.map(x => (
-          <Button ml={1} to={x.to} key={x.to}>
-            {x.label}
-          </Button>
-        ))}
-      </Nav>
-      <Trigger>
-        <DrawerMenu title={title} navItems={navItems} logo={logo} />
-      </Trigger>
-    </Flex>
+  <Wrapper bg="white.light" p={3} shadow={1}>
+    <Container>
+      <Flex
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Link to="/">
+          <Brand alignItems="center">
+            {logo && (
+              <LogoWrapper alignItems="center">
+                <Logo src={logo.childImageSharp.fixed.src} />
+              </LogoWrapper>
+            )}
+            <BrandName display={["none", "block"]} fontSize={3} ml={3}>
+              {title}
+            </BrandName>
+          </Brand>
+        </Link>
+        <Flex>
+          <Nav>
+            {navItems.map(x => (
+              <Button ml={1} to={x.to} key={x.to}>
+                {x.label}
+              </Button>
+            ))}
+          </Nav>
+          <Trigger>
+            <DrawerMenu title={title} navItems={navItems} logo={logo} />
+          </Trigger>
+        </Flex>
+      </Flex>
+    </Container>
   </Wrapper>
 );
