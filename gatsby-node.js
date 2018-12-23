@@ -19,6 +19,20 @@ exports.sourceNodes = ({ getNodes }) => {
         )
         .forEach(n2 => (n1.data[n2.lang] = n2));
     });
+
+  // add translations to wines
+  getNodes()
+    .filter(n1 => n1.internal.type === "WineriesJson")
+    .forEach(n1 => {
+      n1.data = {};
+      getNodes()
+        .filter(
+          n2 =>
+            n2.internal.type === "WineryTranslationsJson" &&
+            n2.winery === n1.wineryId
+        )
+        .forEach(n2 => (n1.data[n2.lang] = n2));
+    });
 };
 
 exports.onCreateNode = ({ node, getNode, actions }) => {

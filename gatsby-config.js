@@ -45,36 +45,8 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/src/data/wines/`,
-        name: "wines",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/data/wineries/`,
-        name: "wineries",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/data/wineTranslations/`,
-        name: "wineTranslations",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/data/awards/`,
-        name: "awards",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/data/wineries/`,
-        name: "wineries",
+        path: `${__dirname}/src/data/`,
+        name: "data",
       },
     },
     "gatsby-plugin-sharp",
