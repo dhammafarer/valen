@@ -6,6 +6,77 @@ const languages = [
   { value: "zh", text: "中文" },
 ];
 
+exports.sourceNodes = ({ getNodes }) => {
+  // add translations to wines
+  getNodes()
+    .filter(n1 => n1.internal.type === "WinesJson")
+    .forEach(n1 => {
+      n1.data = {};
+      getNodes()
+        .filter(
+          n2 =>
+            n2.internal.type === "WineTranslationsJson" && n2.wine === n1.wineId
+        )
+        .forEach(n2 => (n1.data[n2.lang] = n2));
+    });
+};
+
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions;
+  if (node.internal.type === "WinesJson") {
+    const parent = getNode(node.parent);
+    const slug = "/wines/" + node.id.replace(/ /g, "-");
+    console.log(slug);
+    createNodeField({ node, name: "slug", value: slug });
+  }
+  if (node.internal.type === "MarkdownRemark") {
+    const parent = getNode(node.parent);
+    const [name, lang] = parent.name.split(".");
+    const type = parent.sourceInstanceName;
+    const slug = [type, parent.relativeDirectory].join("/");
+
+    createNodeField({ node, name: "lang", value: lang });
+    createNodeField({ node, name: "type", value: type });
+    createNodeField({ node, name: "slug", value: "/" + slug });
+  }
+};
+
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions;
+
+  return graphql(`
+    {
+      allWinesJson(limit: 1000) {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors);
+    }
+
+    result.data.allWinesJson.edges.forEach(({ node }) => {
+      languages.forEach(l => {
+        createPage({
+          path: "/" + l.value + node.fields.slug,
+          component: path.resolve(`src/templates/winesJson.tsx`),
+          context: {
+            languages,
+            locale: l.value,
+            slug: node.fields.slug,
+          },
+        });
+      });
+    });
+  });
+};
+
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
 
@@ -44,58 +115,6 @@ exports.onCreatePage = ({ page, actions }) => {
     });
 
     resolve();
-  });
-};
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions;
-  if (node.internal.type === "MarkdownRemark") {
-    const parent = getNode(node.parent);
-    const [name, lang] = parent.name.split(".");
-    const type = parent.sourceInstanceName;
-    const slug = [type, parent.relativeDirectory].join("/");
-
-    createNodeField({ node, name: "lang", value: lang });
-    createNodeField({ node, name: "type", value: type });
-    createNodeField({ node, name: "slug", value: "/" + slug });
-  }
-};
-
-exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions;
-
-  return graphql(`
-    {
-      allMarkdownRemark(limit: 1000) {
-        edges {
-          node {
-            fields {
-              lang
-              type
-              slug
-            }
-          }
-        }
-      }
-    }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
-
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      createPage({
-        path: `/${node.fields.lang}${node.fields.slug}`,
-        component: path.resolve(
-          `src/templates/${matchTemplate(node.fields.type)}`
-        ),
-        context: {
-          languages,
-          locale: node.fields.lang,
-          slug: node.fields.slug,
-        },
-      });
-    });
   });
 };
 

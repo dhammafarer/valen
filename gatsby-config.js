@@ -51,6 +51,20 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
+        path: `${__dirname}/src/data/wineTranslations/`,
+        name: "wineTranslations",
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: `${__dirname}/src/data/awards/`,
+        name: "awards",
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
         path: `${__dirname}/src/data/wineries/`,
         name: "wineries",
       },
@@ -61,5 +75,6 @@ module.exports = {
     "gatsby-transformer-sharp",
     "gatsby-transformer-javascript-frontmatter",
     "gatsby-transformer-remark",
+    "gatsby-transformer-json",
   ],
 };

@@ -8,7 +8,7 @@ datasheet: "./datasheet-en.pdf"
 spec:
   variety: "Red Gran Reserva Tempranillo; Graciano, Mazuelo"
   aging: "26 months in French and American oak barrels. At least 3 years in the bottle"
-  origin: "D.O.Ca. Rioja"
+  origin: "D.O.C. Rioja"
   alcohol: null
   bottle: "75 cl."
 pairing: "It matches with any kind of meat and mushrooms rice. Some tasty or oily fish such as tuna or cod. Medium-aged cheese such as emmental or gruyere."

@@ -1,0 +1,13 @@
+[
+  {
+    "wineId": "Faustino Gran Reserva 1986",
+    "name": "Faustino Gran Reserva 1986",
+    "winery": "Bodega Faustino",
+    "year": 1986,
+    "kind": "red",
+    "alcohol": "",
+    "bottle": "75 cl.",
+    "image": "faustino-gran-reserva-1986.png",
+    "awards": ["1", "2", "3", "4"]
+  }
+]
