@@ -29,6 +29,13 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     console.log(slug);
     createNodeField({ node, name: "slug", value: slug });
   }
+
+  if (node.internal.type === "WineriesJson") {
+    const parent = getNode(node.parent);
+    const slug = "/wineries/" + node.wineryId.replace(/ /g, "-");
+    console.log(slug);
+    createNodeField({ node, name: "slug", value: slug });
+  }
   if (node.internal.type === "MarkdownRemark") {
     const parent = getNode(node.parent);
     const [name, lang] = parent.name.split(".");
@@ -43,6 +50,38 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
+
+  graphql(`
+    {
+      allWineriesJson(limit: 1000) {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors);
+    }
+
+    result.data.allWineriesJson.edges.forEach(({ node }) => {
+      languages.forEach(l => {
+        createPage({
+          path: "/" + l.value + node.fields.slug,
+          component: path.resolve(`src/templates/wineryTemplate.tsx`),
+          context: {
+            languages,
+            locale: l.value,
+            slug: node.fields.slug,
+          },
+        });
+      });
+    });
+  });
 
   return graphql(`
     {

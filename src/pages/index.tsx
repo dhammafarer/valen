@@ -29,21 +29,16 @@ interface EventNode {
 interface WineNode {
   node: {
     fields: {
-      lang: string;
       slug: string;
     };
-    frontmatter: {
+    name: string;
+    winery: {
       name: string;
-      winery: {
-        frontmatter: {
-          name: string;
-        };
-        fields: {
-          slug: string;
-        };
+      fields: {
+        slug: string;
       };
-      image: any;
     };
+    image: any;
   };
 }
 
@@ -78,12 +73,12 @@ const IndexPage: React.SFC<Props> = ({ data, intl }) => {
           {data.wines.edges.map(({ node }) => (
             <Flex width={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.fields.slug}>
               <WineCard
-                name={node.frontmatter.name}
+                name={node.name}
                 winery={{
-                  name: node.frontmatter.winery.frontmatter.name,
-                  slug: node.frontmatter.winery.fields.slug,
+                  name: node.winery.name,
+                  slug: node.winery.fields.slug,
                 }}
-                image={node.frontmatter.image}
+                image={node.image}
                 slug={node.fields.slug}
               />
             </Flex>
@@ -125,30 +120,23 @@ export const query = graphql`
         }
       }
     }
-    wines: allMarkdownRemark(
-      filter: { fields: { type: { eq: "wines" }, lang: { eq: $locale } } }
-    ) {
+    wines: allWinesJson {
       edges {
         node {
           fields {
-            lang
             slug
           }
-          frontmatter {
+          name
+          winery {
             name
-            winery {
-              fields {
-                slug
-              }
-              frontmatter {
-                name
-              }
+            fields {
+              slug
             }
-            image {
-              childImageSharp {
-                fluid(maxWidth: 200) {
-                  ...GatsbyImageSharpFluid
-                }
+          }
+          image {
+            childImageSharp {
+              fluid(maxWidth: 200) {
+                ...GatsbyImageSharpFluid
               }
             }
           }

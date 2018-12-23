@@ -4,6 +4,7 @@ module.exports = {
   siteMetadata,
   mapping: {
     "MarkdownRemark.frontmatter.winery": "MarkdownRemark.frontmatter.winery_id",
+    "WinesJson.winery": "WineriesJson.wineryId",
   },
   plugins: [
     "gatsby-plugin-react-helmet",
@@ -46,6 +47,13 @@ module.exports = {
       options: {
         path: `${__dirname}/src/data/wines/`,
         name: "wines",
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: `${__dirname}/src/data/wineries/`,
+        name: "wineries",
       },
     },
     {

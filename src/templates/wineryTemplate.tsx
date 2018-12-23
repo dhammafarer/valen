@@ -4,36 +4,19 @@ import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n";
 
 interface WineryTemplateProps {
-  data: {
-    markdownRemark: {
-      html: any;
-      frontmatter: {
-        name: string;
-      };
-    };
-  };
+  data: any;
 }
 
 const WineryTemplate: React.SFC<WineryTemplateProps> = ({ data }) => {
-  const { markdownRemark } = data;
-  const { frontmatter, html } = markdownRemark;
-  return (
-    <Layout>
-      {frontmatter.name}
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </Layout>
-  );
+  return <Layout>{data.winery.name}</Layout>;
 };
 
 export default withIntl(WineryTemplate);
 
 export const query = graphql`
-  query($slug: String!, $locale: String!) {
-    markdownRemark(fields: { slug: { eq: $slug }, lang: { eq: $locale } }) {
-      html
-      frontmatter {
-        name
-      }
+  query($slug: String!) {
+    winery: wineriesJson(fields: { slug: { eq: $slug } }) {
+      name
     }
   }
 `;
