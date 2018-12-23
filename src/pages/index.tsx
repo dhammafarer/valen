@@ -32,8 +32,16 @@ interface WineNode {
       slug: string;
     };
     name: string;
+    data: {
+      en: any;
+      zh: any;
+    };
     winery: {
       name: string;
+      data: {
+        en: any;
+        zh: any;
+      };
       fields: {
         slug: string;
       };
@@ -43,6 +51,9 @@ interface WineNode {
 }
 
 export interface IndexPageProps {
+  pageContext: {
+    locale: string;
+  };
   data: {
     events: {
       edges: EventNode[];
@@ -54,9 +65,10 @@ export interface IndexPageProps {
 }
 type Props = IndexPageProps & InjectedIntlProps;
 
-const IndexPage: React.SFC<Props> = ({ data, intl }) => {
+const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
   const events = data.events.edges;
   const nextEvent = events[0];
+  const locale = pageContext.locale;
   return (
     <Layout>
       <EventBanner
@@ -73,9 +85,9 @@ const IndexPage: React.SFC<Props> = ({ data, intl }) => {
           {data.wines.edges.map(({ node }) => (
             <Flex width={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.fields.slug}>
               <WineCard
-                name={node.name}
+                name={node.data[locale].name}
                 winery={{
-                  name: node.winery.name,
+                  name: node.winery.data[locale].name,
                   slug: node.winery.fields.slug,
                 }}
                 image={node.image}
@@ -127,10 +139,26 @@ export const query = graphql`
             slug
           }
           name
+          data {
+            en {
+              name
+            }
+            zh {
+              name
+            }
+          }
           winery {
             name
             fields {
               slug
+            }
+            data {
+              en {
+                name
+              }
+              zh {
+                name
+              }
             }
           }
           image {

@@ -7,6 +7,36 @@
   {
     "winery": "Bodega Faustino",
     "lang": "zh",
-    "name": "Bodega Faustino Chinese"
+    "name": "Bodega Faustino"
+  },
+  {
+    "winery": "Bodega Sommos Garnacha",
+    "lang": "en",
+    "name": "Bodega Sommos Garnacha"
+  },
+  {
+    "winery": "Bodega Sommos Garnacha",
+    "lang": "zh",
+    "name": "Bodega Sommos Garnacha"
+  },
+  {
+    "winery": "Bodega Zuazo Gaston",
+    "lang": "en",
+    "name": "Bodega Zuazo Gaston"
+  },
+  {
+    "winery": "Bodega Zuazo Gaston",
+    "lang": "zh",
+    "name": "Bodega Zuazo Gaston"
+  },
+  {
+    "winery": "Costers Del Sio",
+    "lang": "en",
+    "name": "Costers Del Sio"
+  },
+  {
+    "winery": "Costers Del Sio",
+    "lang": "zh",
+    "name": "Costers Del Sio"
   }
 ]
