@@ -1,11 +1,11 @@
 import * as React from "react";
 import { BannerWrapper } from "../Banner/BannerWrapper";
-import { styled, Box, Flex, Text } from "primithemes";
+import { styled, Card, Flex, Text } from "primithemes";
 import { FormattedMessage, defineMessages } from "react-intl";
 import { Button } from "../Button";
 import { DetailDate } from "./EventDetails";
 
-const Wrapper = styled(Box)`
+const Wrapper = styled(Card)`
   position: relative;
 `;
 
@@ -43,7 +43,7 @@ const EventBanner: React.SFC<EventBannerProps> = ({
   slug,
   address,
 }) => (
-  <Wrapper color="white.dark" bg="black.dark">
+  <Wrapper shadow={1} radius={2} color="white.dark" bg="black.dark">
     <BannerWrapper image={image}>
       <Flex m={3} alignItems="center" flexDirection="column">
         <Text mb={1} color="white.dark">

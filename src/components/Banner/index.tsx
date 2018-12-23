@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Text } from "src/theme/primitives";
+import { Box, Text } from "primithemes";
 import { BannerWrapper } from "./BannerWrapper";
 
 interface BannerProps {
@@ -19,8 +19,8 @@ const Banner: React.SFC<BannerProps> = props => {
           fontWeight={2}
           textAlign="center"
           textTransform="uppercase"
-          letterSpacing="tracked"
-          lineHeight="title"
+          letterSpacing={1}
+          lineHeight={1}
         >
           {props.heading}
         </Text>

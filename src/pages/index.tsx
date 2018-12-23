@@ -5,7 +5,7 @@ import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n/withIntl";
 import { EventBanner } from "../components/Event/EventBanner";
 import { WineCard } from "../components/Wine/WineCard";
-import { Flex } from "primithemes";
+import { Flex, Box } from "primithemes";
 import { Container } from "../components/Container";
 
 interface EventNode {
@@ -71,15 +71,19 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
   const locale = pageContext.locale;
   return (
     <Layout>
-      <EventBanner
-        image={nextEvent.node.frontmatter.image}
-        heading={nextEvent.node.frontmatter.name}
-        subheading={nextEvent.node.frontmatter.summary}
-        address={nextEvent.node.frontmatter.address}
-        dateStart={nextEvent.node.frontmatter.dateStart}
-        dateEnd={nextEvent.node.frontmatter.dateEnd}
-        slug={nextEvent.node.fields.slug}
-      />
+      <Box m={3}>
+        <Container>
+          <EventBanner
+            image={nextEvent.node.frontmatter.image}
+            heading={nextEvent.node.frontmatter.name}
+            subheading={nextEvent.node.frontmatter.summary}
+            address={nextEvent.node.frontmatter.address}
+            dateStart={nextEvent.node.frontmatter.dateStart}
+            dateEnd={nextEvent.node.frontmatter.dateEnd}
+            slug={nextEvent.node.fields.slug}
+          />
+        </Container>
+      </Box>
       <Container>
         <Flex width={1} flexWrap="wrap">
           {data.wines.edges.map(({ node }) => (
