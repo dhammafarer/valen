@@ -39,8 +39,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   if (node.internal.type === "WinesJson") {
     const parent = getNode(node.parent);
-    const slug = "/wines/" + node.id.replace(/ /g, "-");
-    console.log(slug);
+    const slug = "/wines/" + node.name.replace(/ /g, "-");
     createNodeField({ node, name: "slug", value: slug });
   }
 
@@ -50,6 +49,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     console.log(slug);
     createNodeField({ node, name: "slug", value: slug });
   }
+
   if (node.internal.type === "MarkdownRemark") {
     const parent = getNode(node.parent);
     const [name, lang] = parent.name.split(".");
