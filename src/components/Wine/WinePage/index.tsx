@@ -4,6 +4,17 @@ import { styled, Box, Flex, Text, Card } from "primithemes";
 import { Image } from "../../Image";
 import { Container } from "../../Container";
 import { Button } from "../../Button";
+import { InsertDriveFile } from "styled-icons/material/InsertDriveFile";
+
+const Datasheet = styled(Box)`
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+`;
+
+const Icon = styled(InsertDriveFile)`
+  margin-right: ${props => props.theme.sizes[3]};
+`;
 
 const Sheet = styled(Card)`
   padding: ${props => props.theme.sizes[3]};
@@ -145,7 +156,10 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
             <Box>
               {wine.datasheet && (
                 <Button to={wine.datasheet} outlined>
-                  Download Spec
+                  <Datasheet>
+                    <Icon size={20} />
+                    Download Spec
+                  </Datasheet>
                 </Button>
               )}
             </Box>

@@ -17,13 +17,14 @@ const WineTemplate: React.SFC<WineTemplateProps> = ({
   pageContext,
   data: { wine: w },
 }) => {
+  console.log(w);
   const l = pageContext.locale;
   const wine = {
     name: w.data[l].name,
     kind: w.kind,
     year: w.year,
     image: w.image,
-    datasheet: w.datasheet && w.datasheet.publicURL,
+    datasheet: w.data[l].datasheet.publicURL,
     variety: w.data[l].variety,
     aging: w.data[l].aging,
     origin: w.origin,
@@ -37,7 +38,7 @@ const WineTemplate: React.SFC<WineTemplateProps> = ({
       image: a.image,
     })),
     winery: {
-      country: w.winery.country,
+      country: w.winery.data[l].country,
       name: w.winery.data[l].name,
       slug: w.winery.fields.slug,
     },
