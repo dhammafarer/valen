@@ -2,41 +2,49 @@
   {
     "winery": "Bodega Faustino",
     "lang": "en",
-    "name": "Bodega Faustino"
+    "name": "Bodega Faustino",
+    "country": "Spain"
   },
   {
     "winery": "Bodega Faustino",
     "lang": "zh",
-    "name": "Bodega Faustino"
+    "name": "Bodega Faustino",
+    "country": "Spain"
   },
   {
     "winery": "Bodega Sommos Garnacha",
     "lang": "en",
-    "name": "Bodega Sommos Garnacha"
+    "name": "Bodega Sommos Garnacha",
+    "country": "Spain"
   },
   {
     "winery": "Bodega Sommos Garnacha",
     "lang": "zh",
-    "name": "Bodega Sommos Garnacha"
+    "name": "Bodega Sommos Garnacha",
+    "country": "Spain"
   },
   {
     "winery": "Bodega Zuazo Gaston",
     "lang": "en",
-    "name": "Bodega Zuazo Gaston"
+    "name": "Bodega Zuazo Gaston",
+    "country": "Spain"
   },
   {
     "winery": "Bodega Zuazo Gaston",
     "lang": "zh",
-    "name": "Bodega Zuazo Gaston"
+    "name": "Bodega Zuazo Gaston",
+    "country": "Spain"
   },
   {
     "winery": "Costers Del Sio",
     "lang": "en",
-    "name": "Costers Del Sio"
+    "name": "Costers Del Sio",
+    "country": "Spain"
   },
   {
     "winery": "Costers Del Sio",
     "lang": "zh",
-    "name": "Costers Del Sio"
+    "name": "Costers Del Sio",
+    "country": "Spain"
   }
 ]

@@ -5,6 +5,7 @@ module.exports = {
   mapping: {
     "MarkdownRemark.frontmatter.winery": "MarkdownRemark.frontmatter.winery_id",
     "WinesJson.winery": "WineriesJson.wineryId",
+    "WinesJson.awards": "AwardsJson",
   },
   plugins: [
     "gatsby-plugin-react-helmet",

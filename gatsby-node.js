@@ -118,7 +118,7 @@ exports.createPages = ({ actions, graphql }) => {
       languages.forEach(l => {
         createPage({
           path: "/" + l.value + node.fields.slug,
-          component: path.resolve(`src/templates/winesJson.tsx`),
+          component: path.resolve(`src/templates/wineTemplate.tsx`),
           context: {
             languages,
             locale: l.value,
