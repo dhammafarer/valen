@@ -105,7 +105,7 @@ exports.sourceNodes = ({
           {},
           wineNode,
           intl,
-          { winery, awards }
+          { winery: winery ? winery.id : null, awards }
         );
 
         const nodeMeta = {
@@ -151,6 +151,36 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  graphql(`
+    {
+      allWineries(limit: 1000) {
+        edges {
+          node {
+            lang
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors);
+    }
+
+    result.data.allWineries.edges.forEach(({ node }) => {
+      createPage({
+        path: "/" + node.lang + node.fields.slug,
+        component: path.resolve(`src/templates/wineryTemplate.tsx`),
+        context: {
+          languages,
+          locale: node.lang,
+          slug: node.fields.slug,
+        },
+      });
+    });
+  });
   return graphql(`
     {
       allWines(limit: 1000) {

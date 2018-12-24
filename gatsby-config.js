@@ -4,6 +4,7 @@ module.exports = {
   siteMetadata,
   mapping: {
     "MarkdownRemark.frontmatter.winery": "MarkdownRemark.frontmatter.winery_id",
+    "Wines.winery": "Wineries.id",
     "Wines.awards": "Awards",
   },
   plugins: [
