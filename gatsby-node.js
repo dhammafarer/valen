@@ -15,7 +15,7 @@ exports.sourceNodes = ({
   const { createNode } = actions;
 
   languages.forEach(({ value }) => {
-    // add translations to wineries
+    // add translations to awards
     getNodes()
       .filter(n1 => n1.internal.type === "AwardsJson")
       .forEach(awardNode => {
@@ -85,17 +85,24 @@ exports.sourceNodes = ({
         );
 
         const winery = getNodes().find(
-          wineryNode =>
-            wineryNode.internal.type === "Wineries" &&
-            wineryNode.wineryId === wineNode.winery &&
-            wineryNode.lang === value
+          n =>
+            n.internal.type === "Wineries" &&
+            n.wineryId === wineNode.winery &&
+            n.lang === value
+        );
+
+        const awards = wineNode.awards.map(a =>
+          getNodes().find(
+            n =>
+              n.internal.type === "Awards" && n.award === a && n.lang === value
+          )
         );
 
         const { id, parent, children, internal, ...content } = Object.assign(
           {},
           wineNode,
           intl,
-          { winery }
+          { winery, awards }
         );
 
         const nodeMeta = {
