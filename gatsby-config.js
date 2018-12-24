@@ -6,6 +6,7 @@ module.exports = {
     "MarkdownRemark.frontmatter.winery": "MarkdownRemark.frontmatter.winery_id",
     "Wines.winery": "Wineries.id",
     "Wines.awards": "Awards",
+    "Events.md": "MarkdownRemark.id",
   },
   plugins: [
     "gatsby-plugin-react-helmet",

@@ -121,6 +121,37 @@ exports.sourceNodes = ({
         const node = Object.assign({}, content, nodeMeta);
         createNode(node);
       });
+
+    // add translations to events
+    getNodes()
+      .filter(n1 => n1.internal.type === "EventsJson")
+      .forEach(eventNode => {
+        const md = getNodes().find(
+          t =>
+            t.internal.type === "MarkdownRemark" &&
+            t.frontmatter.event === eventNode.eventId &&
+            t.frontmatter.lang === value
+        );
+
+        const { id, parent, children, internal, ...content } = Object.assign(
+          {},
+          eventNode,
+          { md: md.id }
+        );
+
+        const nodeMeta = {
+          id: createNodeId(`${eventNode.id}-${value}`),
+          parent: eventNode.parent,
+          children: [],
+          internal: {
+            type: `Events`,
+            content: JSON.stringify(content),
+            contentDigest: createContentDigest(content),
+          },
+        };
+        const node = Object.assign({}, content, nodeMeta);
+        createNode(node);
+      });
   });
 };
 
