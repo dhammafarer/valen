@@ -93,12 +93,13 @@ exports.sourceNodes = ({
             n.lang === value
         );
 
-        const awards = wineNode.awards.map(a =>
-          getNodes().find(
+        const awards = wineNode.awards.map(a => {
+          const node = getNodes().find(
             n =>
               n.internal.type === "Awards" && n.award === a && n.lang === value
-          )
-        );
+          );
+          return node ? node.id : null;
+        });
 
         const { id, parent, children, internal, ...content } = Object.assign(
           {},
