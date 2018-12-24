@@ -1,41 +1,41 @@
 [
   {
-    "award-id": "1",
+    "award": "1",
     "lang": "en",
     "name": "Silver Medal, vintage 2004, Concours Mondial de Bruxelles 2016, Belguim"
   },
   {
-    "award-id": "2",
+    "award": "2",
     "lang": "en",
     "name": "91 points, vintage 2006, Guía Peñín 2018, Spain"
   },
   {
-    "award-id": "3",
+    "award": "3",
     "lang": "en",
     "name": "Premium Gold, vintage 2005, Berliner Wine Trophy 2017"
   },
   {
-    "award-id": "4",
+    "award": "4",
     "lang": "en",
     "name": "Golden Bacchus, vintage 2004, Premios Bacchus 2016, Spain"
   },
   {
-    "award-id": "1",
+    "award": "1",
     "lang": "zh",
     "name": "Silver Medal, vintage 2004, Concours Mondial de Bruxelles 2016, Belguim"
   },
   {
-    "award-id": "2",
+    "award": "2",
     "lang": "zh",
     "name": "91 points, vintage 2006, Guía Peñín 2018, Spain"
   },
   {
-    "award-id": "3",
+    "award": "3",
     "lang": "zh",
     "name": "Premium Gold, vintage 2005, Berliner Wine Trophy 2017"
   },
   {
-    "award-id": "4",
+    "award": "4",
     "lang": "zh",
     "name": "Golden Bacchus, vintage 2004, Premios Bacchus 2016, Spain"
   }

@@ -17,28 +17,8 @@ type Props = IndexPageProps;
 
 class EventsPage extends React.Component<Props, {}> {
   render() {
-    return <Layout>wineries: {this.props.data.wineries.edges.length}</Layout>;
+    return <Layout>winery</Layout>;
   }
 }
 
 export default withIntl(EventsPage);
-
-export const query = graphql`
-  query WineriesPageQuery {
-    wineries: allMarkdownRemark(
-      filter: { fields: { type: { eq: "wineries" } } }
-    ) {
-      edges {
-        node {
-          fields {
-            lang
-            slug
-          }
-          frontmatter {
-            name
-          }
-        }
-      }
-    }
-  }
-`;

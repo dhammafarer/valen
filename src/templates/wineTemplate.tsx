@@ -2,7 +2,6 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n";
-import { WinePage } from "../components/Wine/WinePage";
 
 interface WineTemplateProps {
   pageContext: {

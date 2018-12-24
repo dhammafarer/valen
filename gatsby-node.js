@@ -14,25 +14,93 @@ exports.sourceNodes = ({
 }) => {
   const { createNode } = actions;
 
-  // add translations to wines
-  getNodes()
-    .filter(n1 => n1.internal.type === "WinesJson")
-    .forEach(n => {
-      languages.forEach(({ value }) => {
+  languages.forEach(({ value }) => {
+    // add translations to wineries
+    getNodes()
+      .filter(n1 => n1.internal.type === "AwardsJson")
+      .forEach(awardNode => {
         const intl = getNodes().find(
-          n2 =>
-            n2.internal.type === "WineTranslationsJson" &&
-            n2.wine === n.wineId &&
-            n2.lang === value
+          t =>
+            t.internal.type === "AwardTranslationsJson" &&
+            t.award === awardNode.awardId &&
+            t.lang === value
         );
         const { id, parent, children, internal, ...content } = Object.assign(
           {},
-          n,
+          awardNode,
           intl
         );
         const nodeMeta = {
-          id: createNodeId(`${n.id}-${value}`),
-          parent: n.parent,
+          id: createNodeId(`${awardNode.id}-${value}`),
+          parent: awardNode.parent,
+          children: [],
+          internal: {
+            type: `Awards`,
+            content: JSON.stringify(content),
+            contentDigest: createContentDigest(content),
+          },
+        };
+        const node = Object.assign({}, content, nodeMeta);
+        createNode(node);
+      });
+
+    // add translations to wineries
+    getNodes()
+      .filter(n1 => n1.internal.type === "WineriesJson")
+      .forEach(wineryNode => {
+        const intl = getNodes().find(
+          t =>
+            t.internal.type === "WineryTranslationsJson" &&
+            t.winery === wineryNode.wineryId &&
+            t.lang === value
+        );
+        const { id, parent, children, internal, ...content } = Object.assign(
+          {},
+          wineryNode,
+          intl
+        );
+        const nodeMeta = {
+          id: createNodeId(`${wineryNode.id}-${value}`),
+          parent: wineryNode.parent,
+          children: [],
+          internal: {
+            type: `Wineries`,
+            content: JSON.stringify(content),
+            contentDigest: createContentDigest(content),
+          },
+        };
+        const node = Object.assign({}, content, nodeMeta);
+        createNode(node);
+      });
+
+    // add translations to wines
+    getNodes()
+      .filter(n1 => n1.internal.type === "WinesJson")
+      .forEach(wineNode => {
+        const intl = getNodes().find(
+          n2 =>
+            n2.internal.type === "WineTranslationsJson" &&
+            n2.wine === wineNode.wineId &&
+            n2.lang === value
+        );
+
+        const winery = getNodes().find(
+          wineryNode =>
+            wineryNode.internal.type === "Wineries" &&
+            wineryNode.wineryId === wineNode.winery &&
+            wineryNode.lang === value
+        );
+
+        const { id, parent, children, internal, ...content } = Object.assign(
+          {},
+          wineNode,
+          intl,
+          { winery }
+        );
+
+        const nodeMeta = {
+          id: createNodeId(`${wineNode.id}-${value}`),
+          parent: wineNode.parent,
           children: [],
           internal: {
             type: `Wines`,
@@ -43,21 +111,7 @@ exports.sourceNodes = ({
         const node = Object.assign({}, content, nodeMeta);
         createNode(node);
       });
-    });
-
-  // add translations to wineries
-  getNodes()
-    .filter(n1 => n1.internal.type === "WineriesJson")
-    .forEach(n1 => {
-      n1.data = {};
-      getNodes()
-        .filter(
-          n2 =>
-            n2.internal.type === "WineryTranslationsJson" &&
-            n2.winery === n1.wineryId
-        )
-        .forEach(n2 => (n1.data[n2.lang] = n2));
-    });
+  });
 };
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -67,8 +121,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({ node, name: "slug", value: slug });
   }
 
-  if (node.internal.type === "WineriesJson") {
-    const parent = getNode(node.parent);
+  if (node.internal.type === "Wineries") {
     const slug = "/wineries/" + node.wineryId.replace(/ /g, "-");
     createNodeField({ node, name: "slug", value: slug });
   }
@@ -87,38 +140,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
-
-  graphql(`
-    {
-      allWineriesJson(limit: 1000) {
-        edges {
-          node {
-            fields {
-              slug
-            }
-          }
-        }
-      }
-    }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
-
-    result.data.allWineriesJson.edges.forEach(({ node }) => {
-      languages.forEach(l => {
-        createPage({
-          path: "/" + l.value + node.fields.slug,
-          component: path.resolve(`src/templates/wineryTemplate.tsx`),
-          context: {
-            languages,
-            locale: l.value,
-            slug: node.fields.slug,
-          },
-        });
-      });
-    });
-  });
 
   return graphql(`
     {
