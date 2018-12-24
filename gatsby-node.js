@@ -25,11 +25,13 @@ exports.sourceNodes = ({
             t.award === awardNode.awardId &&
             t.lang === value
         );
+
         const { id, parent, children, internal, ...content } = Object.assign(
           {},
           awardNode,
           intl
         );
+
         const nodeMeta = {
           id: createNodeId(`${awardNode.id}-${value}`),
           parent: awardNode.parent,
@@ -150,9 +152,10 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allWinesJson(limit: 1000) {
+      allWines(limit: 1000) {
         edges {
           node {
+            lang
             fields {
               slug
             }
@@ -165,17 +168,15 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors);
     }
 
-    result.data.allWinesJson.edges.forEach(({ node }) => {
-      languages.forEach(l => {
-        createPage({
-          path: "/" + l.value + node.fields.slug,
-          component: path.resolve(`src/templates/wineTemplate.tsx`),
-          context: {
-            languages,
-            locale: l.value,
-            slug: node.fields.slug,
-          },
-        });
+    result.data.allWines.edges.forEach(({ node }) => {
+      createPage({
+        path: "/" + node.lang + node.fields.slug,
+        component: path.resolve(`src/templates/wineTemplate.tsx`),
+        context: {
+          languages,
+          locale: node.lang,
+          slug: node.fields.slug,
+        },
       });
     });
   });

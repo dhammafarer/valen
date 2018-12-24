@@ -32,7 +32,12 @@ interface WineNode {
       slug: string;
     };
     name: string;
-    winery: string;
+    winery: {
+      name: string;
+      fields: {
+        slug: string;
+      };
+    };
     image: any;
   };
 }
@@ -77,8 +82,8 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
               <WineCard
                 name={node.name}
                 winery={{
-                  name: node.winery,
-                  slug: node.winery,
+                  name: node.winery.name,
+                  slug: node.winery.fields.slug,
                 }}
                 image={node.image}
                 slug={node.fields.slug}
@@ -129,7 +134,12 @@ export const query = graphql`
             slug
           }
           name
-          winery
+          winery {
+            name
+            fields {
+              slug
+            }
+          }
           image {
             childImageSharp {
               fluid(maxWidth: 200) {

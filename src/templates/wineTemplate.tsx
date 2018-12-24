@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n";
+import { WinePage } from "../components/Wine/WinePage";
 
 interface WineTemplateProps {
   pageContext: {
@@ -12,15 +13,18 @@ interface WineTemplateProps {
   };
 }
 
-const WineTemplate: React.SFC<WineTemplateProps> = ({ data: { wine: w } }) => {
-  console.log(w);
-  return <Layout>{w.name}</Layout>;
+const WineTemplate: React.SFC<WineTemplateProps> = ({ data: { wine } }) => {
+  return (
+    <Layout>
+      <WinePage wine={wine} />
+    </Layout>
+  );
 };
 
 export default withIntl(WineTemplate);
 
 export const query = graphql`
-  query($slug: String!, $locale: string!) {
+  query($slug: String!, $locale: String!) {
     wine: wines(fields: { slug: { eq: $slug } }, lang: { eq: $locale }) {
       origin
       kind
@@ -32,6 +36,13 @@ export const query = graphql`
         }
       }
       name
+      winery {
+        name
+        country
+        fields {
+          slug
+        }
+      }
       pairing
       aging
       nose
@@ -40,6 +51,16 @@ export const query = graphql`
       eye
       datasheet {
         publicURL
+      }
+      awards {
+        name
+        image {
+          childImageSharp {
+            fluid(maxWidth: 36) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }

@@ -102,17 +102,27 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
                 fontSize={3}
                 contained
                 variant="secondary"
-                to={wine.winery.slug}
+                to={wine.winery.fields.slug}
               >
                 {wine.winery.name}
               </Button>
               {wine.winery.country && (
-                <Button mr={2} fontSize={3} outlined to={wine.winery.slug}>
+                <Button
+                  mr={2}
+                  fontSize={3}
+                  outlined
+                  to={wine.winery.fields.slug}
+                >
                   {wine.winery.country}
                 </Button>
               )}
               {wine.kind && (
-                <Button mr={2} fontSize={3} outlined to={wine.winery.slug}>
+                <Button
+                  mr={2}
+                  fontSize={3}
+                  outlined
+                  to={wine.winery.fields.slug}
+                >
                   {wine.kind}
                 </Button>
               )}
@@ -155,7 +165,7 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
           <Section mt={4}>
             <Box>
               {wine.datasheet && (
-                <Button to={wine.datasheet} outlined>
+                <Button to={wine.datasheet.publicURL} outlined>
                   <Datasheet>
                     <Icon size={20} />
                     Download Spec
@@ -176,7 +186,9 @@ interface Props {
     kind?: string;
     year?: number;
     image?: any;
-    datasheet?: string;
+    datasheet?: {
+      publicURL: string;
+    };
     variety?: string;
     aging?: string;
     origin?: string;
@@ -189,7 +201,9 @@ interface Props {
     winery?: {
       country?: string;
       name?: string;
-      slug?: string;
+      fields: {
+        slug?: string;
+      };
     };
   };
 }
