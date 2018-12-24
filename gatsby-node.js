@@ -6,21 +6,46 @@ const languages = [
   { value: "zh", text: "中文" },
 ];
 
-exports.sourceNodes = ({ getNodes }) => {
+exports.sourceNodes = ({
+  actions,
+  getNodes,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode } = actions;
+
   // add translations to wines
   getNodes()
     .filter(n1 => n1.internal.type === "WinesJson")
-    .forEach(n1 => {
-      n1.data = {};
-      getNodes()
-        .filter(
+    .forEach(n => {
+      languages.forEach(({ value }) => {
+        const intl = getNodes().find(
           n2 =>
-            n2.internal.type === "WineTranslationsJson" && n2.wine === n1.wineId
-        )
-        .forEach(n2 => (n1.data[n2.lang] = n2));
+            n2.internal.type === "WineTranslationsJson" &&
+            n2.wine === n.wineId &&
+            n2.lang === value
+        );
+        const { id, parent, children, internal, ...content } = Object.assign(
+          {},
+          n,
+          intl
+        );
+        const nodeMeta = {
+          id: createNodeId(`${n.id}-${value}`),
+          parent: n.parent,
+          children: [],
+          internal: {
+            type: `Wines`,
+            content: JSON.stringify(content),
+            contentDigest: createContentDigest(content),
+          },
+        };
+        const node = Object.assign({}, content, nodeMeta);
+        createNode(node);
+      });
     });
 
-  // add translations to wines
+  // add translations to wineries
   getNodes()
     .filter(n1 => n1.internal.type === "WineriesJson")
     .forEach(n1 => {
@@ -37,8 +62,7 @@ exports.sourceNodes = ({ getNodes }) => {
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
-  if (node.internal.type === "WinesJson") {
-    const parent = getNode(node.parent);
+  if (node.internal.type === "Wines") {
     const slug = "/wines/" + node.name.replace(/ /g, "-");
     createNodeField({ node, name: "slug", value: slug });
   }
@@ -46,7 +70,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   if (node.internal.type === "WineriesJson") {
     const parent = getNode(node.parent);
     const slug = "/wineries/" + node.wineryId.replace(/ /g, "-");
-    console.log(slug);
     createNodeField({ node, name: "slug", value: slug });
   }
 

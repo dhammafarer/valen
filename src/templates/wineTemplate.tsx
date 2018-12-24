@@ -13,49 +13,16 @@ interface WineTemplateProps {
   };
 }
 
-const WineTemplate: React.SFC<WineTemplateProps> = ({
-  pageContext,
-  data: { wine: w },
-}) => {
+const WineTemplate: React.SFC<WineTemplateProps> = ({ data: { wine: w } }) => {
   console.log(w);
-  const l = pageContext.locale;
-  const wine = {
-    name: w.data[l].name,
-    kind: w.kind,
-    year: w.year,
-    image: w.image,
-    datasheet: w.data[l].datasheet.publicURL,
-    variety: w.data[l].variety,
-    aging: w.data[l].aging,
-    origin: w.origin,
-    bottle: w.bottle,
-    pairing: w.data[l].pairing,
-    eye: w.data[l].eye,
-    nose: w.data[l].nose,
-    mouth: w.data[l].mouth,
-    awards: w.awards.map((a: any) => ({
-      name: a.name,
-      image: a.image,
-    })),
-    winery: {
-      country: w.winery.data[l].country,
-      name: w.winery.data[l].name,
-      slug: w.winery.fields.slug,
-    },
-  };
-
-  return (
-    <Layout>
-      <WinePage wine={wine} />
-    </Layout>
-  );
+  return <Layout>{w.name}</Layout>;
 };
 
 export default withIntl(WineTemplate);
 
 export const query = graphql`
-  query($slug: String!) {
-    wine: winesJson(fields: { slug: { eq: $slug } }) {
+  query($slug: String!, $locale: string!) {
+    wine: wines(fields: { slug: { eq: $slug } }, lang: { eq: $locale }) {
       origin
       kind
       image {
@@ -65,44 +32,15 @@ export const query = graphql`
           }
         }
       }
-      data {
-        en {
-          name
-          pairing
-          aging
-          nose
-          mouth
-          variety
-          eye
-          datasheet {
-            publicURL
-          }
-        }
-      }
-      winery {
-        fields {
-          slug
-        }
-        data {
-          en {
-            name
-            country
-          }
-          zh {
-            name
-            country
-          }
-        }
-      }
-      awards {
-        name
-        image {
-          childImageSharp {
-            fixed(width: 48) {
-              ...GatsbyImageSharpFixed
-            }
-          }
-        }
+      name
+      pairing
+      aging
+      nose
+      mouth
+      variety
+      eye
+      datasheet {
+        publicURL
       }
     }
   }
