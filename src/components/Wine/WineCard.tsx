@@ -12,7 +12,9 @@ interface Props {
   image: any;
   winery: {
     name: string;
-    slug: string;
+    fields: {
+      slug: string;
+    };
   };
 }
 
@@ -36,17 +38,19 @@ const WineCard: React.SFC<Props> = ({ name, winery, slug, image }) => (
         <Text is="h3" fontSize={3} lineHeight={1} color="primary.main">
           {name}
         </Text>
-        <Link to={winery.slug}>
-          <Text
-            textTransform="uppercase"
-            is="span"
-            mt={1}
-            fontSize={2}
-            color="secondary.main"
-          >
-            {winery.name}
-          </Text>
-        </Link>
+        {winery && (
+          <Link to={winery.fields.slug}>
+            <Text
+              textTransform="uppercase"
+              is="span"
+              mt={1}
+              fontSize={2}
+              color="secondary.main"
+            >
+              {winery.name}
+            </Text>
+          </Link>
+        )}
       </Box>
       <Flex mt={3}>
         <Button to={slug} outlined>

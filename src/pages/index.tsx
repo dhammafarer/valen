@@ -82,10 +82,7 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
             <Flex width={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.wineId}>
               <WineCard
                 name={node.name}
-                winery={{
-                  name: node.winery.name,
-                  slug: node.winery.fields.slug,
-                }}
+                winery={node.winery}
                 image={node.image}
                 slug={node.fields.slug}
               />
