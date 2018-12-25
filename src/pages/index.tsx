@@ -32,6 +32,7 @@ interface WineNode {
       slug: string;
     };
     name: string;
+    wineId: string;
     winery: {
       name: string;
       fields: {
@@ -78,7 +79,7 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
       <Container>
         <Flex width={1} flexWrap="wrap">
           {data.wines.edges.map(({ node }) => (
-            <Flex width={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.fields.slug}>
+            <Flex width={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.wineId}>
               <WineCard
                 name={node.name}
                 winery={{
@@ -127,9 +128,10 @@ export const query = graphql`
         }
       }
     }
-    wines: allWines {
+    wines: allWines(filter: { lang: { eq: $locale } }) {
       edges {
         node {
+          wineId
           fields {
             slug
           }
