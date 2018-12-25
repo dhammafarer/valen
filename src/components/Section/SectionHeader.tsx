@@ -34,7 +34,7 @@ export const SectionHeader: React.SFC<Props> = ({
           mt={2}
           color="text.dark"
           textAlign="center"
-          lineHeight={"copy"}
+          lineHeight={2}
           key={i}
         >
           {x}

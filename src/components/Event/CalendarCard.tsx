@@ -10,7 +10,7 @@ const CalendarCard: React.SFC<Props> = ({ date }) => (
   <Card
     bg="white.light"
     p={2}
-    width={"70px"}
+    w={"70px"}
     style={{ height: "70px" }}
     alignItems="center"
     shadow={2}

@@ -24,16 +24,16 @@ const AboutSummary: React.SFC<AboutSummaryProps> = ({
     <Section>
       <SectionHeader heading={heading} subheading={subheading} body={body} />
       {!!highlights && (
-        <Flex flexWrap="wrap" width={1} p={3}>
+        <Flex flexWrap="wrap" w={1} p={3}>
           {highlights.map((h, i) => (
             <Flex
               p={3}
-              width={[1, 1 / 2, 1 / 4]}
+              w={[1, 1 / 2, 1 / 4]}
               key={i}
               alignItems="center"
               flexDirection="column"
             >
-              <Box width={1}>
+              <Box w={1}>
                 <Text
                   color="primary.main"
                   mb={2}

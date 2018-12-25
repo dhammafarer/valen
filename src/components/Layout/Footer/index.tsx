@@ -41,7 +41,7 @@ const Footer: React.SFC<Props> = ({ logo, title, phone, email, address }) => (
         flexDirection="column"
       >
         {logo && (
-          <Flex style={{ opacity: 0.9 }} width={["220px"]}>
+          <Flex style={{ opacity: 0.9 }} w={["220px"]}>
             <img
               style={{ width: "100%", height: "100%" }}
               src={logo.childImageSharp.fixed.src}

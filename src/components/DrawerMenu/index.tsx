@@ -38,11 +38,7 @@ const DrawerMenu: React.SFC<DrawerMenuProps> = ({ logo, title, navItems }) => {
             toggleMenu={injected.toggleMenu}
             width={300}
           >
-            <DrawerContent
-              flexDirection="column"
-              bg="background.light"
-              spacing={3}
-            >
+            <DrawerContent flexDirection="column" bg="background.light">
               <Flex justifyContent="flex-end">
                 <CloseButton onClick={injected.handleClose} />
               </Flex>
@@ -61,7 +57,7 @@ const DrawerMenu: React.SFC<DrawerMenuProps> = ({ logo, title, navItems }) => {
               <Flex justifyContent="center" flexDirection="column" p={1}>
                 {navItems.map(x => (
                   <Flex key={x.to} p={1}>
-                    <Button onClick={injected.handleClose} width={1} to={x.to}>
+                    <Button onClick={injected.handleClose} w={1} to={x.to}>
                       {x.label}
                     </Button>
                   </Flex>

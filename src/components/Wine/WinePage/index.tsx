@@ -67,13 +67,13 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
         radius={2}
         shadow={1}
         bg="background.light"
-        width={1}
+        w={1}
         flexDirection="row"
         flexWrap="wrap"
         alignItems="space-between"
       >
         <ImageWrapper
-          width={[1, 1 / 3, 1 / 2, 1 / 4, 1 / 3]}
+          w={[1, 1 / 3, 1 / 2, 1 / 4, 1 / 3]}
           justifyContent="center"
           alignItems="flex-start"
         >
@@ -84,7 +84,7 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
           />
         </ImageWrapper>
 
-        <ContentWrapper width={[1, 2 / 3, 1 / 2, 3 / 4, 2 / 3]}>
+        <ContentWrapper w={[1, 2 / 3, 1 / 2, 3 / 4, 2 / 3]}>
           <Box>
             <Text is="h1" fontSize={[5, 5, 6]}>
               {wine.name}
@@ -134,7 +134,7 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
               <Text as="h3">Latest Awards</Text>
               <Flex mt={2} flexWrap="wrap">
                 {wine.awards.map((a, i) => (
-                  <Flex width={1} p={2} alignItems="center">
+                  <Flex w={1} p={2} alignItems="center">
                     <Image style={{ flexShrink: 0 }} fixed={a.image} />
                     <Text ml={3}>{a.name}</Text>
                   </Flex>

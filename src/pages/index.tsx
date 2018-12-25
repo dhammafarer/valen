@@ -77,9 +77,9 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
         </Container>
       </Box>
       <Container>
-        <Flex width={1} flexWrap="wrap">
+        <Flex w={1} flexWrap="wrap">
           {data.wines.edges.map(({ node }) => (
-            <Flex width={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.wineId}>
+            <Flex w={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.wineId}>
               <WineCard
                 name={node.name}
                 winery={node.winery}

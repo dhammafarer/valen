@@ -19,7 +19,7 @@ interface Props {
 }
 
 const WineCard: React.SFC<Props> = ({ name, winery, slug, image }) => (
-  <Card shadow={1} radius={2} width={1} style={{ height: "100%" }}>
+  <Card shadow={1} radius={2} w={1} style={{ height: "100%" }}>
     <Box bg="background.light" p={3} style={{ height: 300 }}>
       <Img
         imgStyle={{ objectFit: "contain" }}
