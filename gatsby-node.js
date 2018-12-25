@@ -57,12 +57,12 @@ exports.sourceNodes = ({
         const intl = getNodes().find(
           t =>
             t.internal.type === "WineryTranslationsJson" &&
-            t.winery === wineryNode.wineryId &&
-            t.lang === value
+            t.lang === value &&
+            t.wineryId === wineryNode.wineryId
         );
         const { id, parent, children, internal, ...content } = Object.assign(
-          {},
-          wineryNode,
+          { lang: value },
+          mergeTranslation(wineryNode, intl),
           intl
         );
         const nodeMeta = {
@@ -75,6 +75,7 @@ exports.sourceNodes = ({
             contentDigest: createContentDigest(content),
           },
         };
+
         const node = Object.assign({}, content, nodeMeta);
         createNode(node);
       });
@@ -93,7 +94,7 @@ exports.sourceNodes = ({
         const winery = getNodes().find(
           n =>
             n.internal.type === "Wineries" &&
-            n.wineryId === wineNode.winery &&
+            n.wineryId === wineNode.wineryId &&
             n.lang === value
         );
 
@@ -108,7 +109,6 @@ exports.sourceNodes = ({
         const { id, parent, children, internal, ...content } = Object.assign(
           { lang: value },
           mergeTranslation(wineNode, intl),
-          // wineNode, intl,
           { winery: winery ? winery.id : null, awards }
         );
 
