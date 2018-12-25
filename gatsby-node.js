@@ -1,3 +1,4 @@
+const { isNil, isEmpty, either, mergeWith, defaultTo } = require("ramda");
 const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
@@ -5,6 +6,9 @@ const languages = [
   { value: "en", text: "English" },
   { value: "zh", text: "中文" },
 ];
+
+const mergeTranslation = (a, b) =>
+  mergeWith((a, b) => (either(isNil, isEmpty)(b) ? a : b))(a, defaultTo({}, b));
 
 exports.sourceNodes = ({
   actions,
@@ -82,7 +86,7 @@ exports.sourceNodes = ({
         const intl = getNodes().find(
           n2 =>
             n2.internal.type === "WineTranslationsJson" &&
-            n2.wine === wineNode.wineId &&
+            n2.wineId === wineNode.wineId &&
             n2.lang === value
         );
 
@@ -102,9 +106,9 @@ exports.sourceNodes = ({
         });
 
         const { id, parent, children, internal, ...content } = Object.assign(
-          {},
-          wineNode,
-          intl,
+          { lang: value },
+          mergeTranslation(wineNode, intl),
+          // wineNode, intl,
           { winery: winery ? winery.id : null, awards }
         );
 
