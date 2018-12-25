@@ -1,0 +1,16 @@
+backend:
+  name: "github"
+  branch: "develop"
+  repo: "dhammafarer/valen"
+
+media_folder: "src/images"
+public_folder: "assets"
+
+collections:
+  - name: "wines"
+    label: "Wines"
+    folder: "src/data/wines"
+    extension: "json"
+    create: true
+    fields:
+      - {name: "name", label: "Name"}
