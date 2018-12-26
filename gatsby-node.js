@@ -162,6 +162,19 @@ exports.sourceNodes = ({
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
 
+  const { image } = node;
+  // tranform absolute path into relative path
+  if (image) {
+    if (node.internal.type.indexOf("Json") > -1) {
+      if (image.indexOf("/assets") === 0) {
+        node.image = path.relative(
+          path.dirname(getNode(node.parent).absolutePath),
+          path.join(__dirname, "/static/", image)
+        );
+      }
+    }
+  }
+
   if (node.internal.type === "Wines") {
     const slug = "/wines/" + node.wineId.replace(/ /g, "-");
     createNodeField({ node, name: "slug", value: slug });
