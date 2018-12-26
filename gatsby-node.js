@@ -161,8 +161,9 @@ exports.sourceNodes = ({
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
+
   if (node.internal.type === "Wines") {
-    const slug = "/wines/" + node.name.replace(/ /g, "-");
+    const slug = "/wines/" + node.wineId.replace(/ /g, "-");
     createNodeField({ node, name: "slug", value: slug });
   }
 

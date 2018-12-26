@@ -3,14 +3,76 @@ backend:
   branch: "develop"
   repo: "dhammafarer/valen"
 
-media_folder: "src/images"
-public_folder: "assets"
+media_folder: "/static/assets/uploads/"
+public_folder: "/assets/uploads"
 
 collections:
+  - name: "awards"
+    label: "Awards"
+    folder: "src/data/awards"
+    create: true
+    extension: "json"
+    identified_field: "awardId"
+    fields:
+      - { name: "awardId", label: "Award ID" }
+      - { name: "name", label: "Name" }
+      - { name: "image", label: "Image", widge: "image" }
+
+  - name: "wineries"
+    label: "Wineries"
+    folder: "src/data/wineries"
+    create: true
+    extension: "json"
+    identifier_field: "wineryId"
+    fields:
+      - { name: "wineryId", label: "Winery ID" }
+      - { name: "name", label: "Name" }
+      - { name: "country", label: "Country" }
+
   - name: "wines"
+    identifier_field: "wineId"
     label: "Wines"
     folder: "src/data/wines"
     extension: "json"
     create: true
     fields:
-      - {name: "name", label: "Name"}
+      - { name: "wineId", label: "Wine ID" }
+      - { name: "name", label: "Name" }
+      - {
+          name: "winery",
+          label: "Winery ID",
+          widget: "relation",
+          collection: "wineries",
+          searchFields: ["name"],
+          valueField: "wineryId",
+          displayFields: ["name"],
+        }
+      - name: "kind"
+        label: "Kind"
+        widget: "select"
+        options:
+          - { label: "Red", value: "red" }
+          - { label: "White", value: "white" }
+          - { label: "Rose", value: "rose" }
+          - { label: "Sparkling", value: "sparkling" }
+      - { name: "origin", label: "Origin" }
+      - { name: "alcohol", label: "Alcohol Content" }
+      - { name: "bottle", label: "Bottle", default: "0.75" }
+      - { name: "image", label: "Image", widget: "image" }
+      - { name: "datasheet", label: "Datasheet", widge: "file" }
+      - { name: "variety", label: "Variety" }
+      - { name: "eye", label: "Eye" }
+      - { name: "nose", label: "Nose" }
+      - { name: "mouth", label: "Mouth" }
+      - { name: "pairing", label: "Food Pairing" }
+      - name: "awards"
+        label: "Awards"
+        widget: "list"
+        field:
+          label: "Award"
+          name: "awardId"
+          widget: "relation"
+          collection: "awards"
+          searchFields: ["name"]
+          valueField: "awardId"
+          displayFields: ["name"]
