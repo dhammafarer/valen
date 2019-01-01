@@ -21,12 +21,12 @@ export const sourceNodes: GatsbySourceNodes = ({
         const intl = getNodes().find(
           t =>
             t.internal.type === "AwardTranslationsJson" &&
-            t.award === awardNode.awardId &&
+            t.award === awardNode.id &&
             t.lang === code
         );
 
         const { id, parent, children, internal, ...content } = Object.assign(
-          {},
+          { lang: code, awardId: awardNode.id },
           awardNode,
           intl
         );
@@ -96,15 +96,16 @@ export const sourceNodes: GatsbySourceNodes = ({
         const awards = wineNode.awards.map((a: any) => {
           const node = getNodes().find(
             n =>
-              n.internal.type === "Awards" && n.award === a && n.lang === code
+              n.internal.type === "Awards" && n.awardId === a && n.lang === code
           );
-          return node ? node.id : null;
+          console.log(node.id);
+          return node ? node.id : "";
         });
 
         const { id, parent, children, internal, ...content } = Object.assign(
           { lang: code },
           mergeTranslation(wineNode, intl),
-          { winery: winery ? winery.id : null, awards }
+          { winery: winery ? winery.id : "", awards }
         );
 
         const nodeMeta = {
