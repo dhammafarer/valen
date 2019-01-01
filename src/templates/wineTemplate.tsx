@@ -49,9 +49,6 @@ export const query = graphql`
       mouth
       variety
       eye
-      datasheet {
-        publicURL
-      }
       awards {
         name
         image {

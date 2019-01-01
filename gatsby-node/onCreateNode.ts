@@ -1,8 +1,5 @@
-import { contains } from "ramda";
-import { replacePath } from "./helpers";
+import path from "path";
 import { GatsbyOnCreateNode } from "./types";
-
-const { createFilePath } = require("gatsby-source-filesystem");
 
 export const onCreateNode: GatsbyOnCreateNode = ({
   node,
@@ -11,23 +8,37 @@ export const onCreateNode: GatsbyOnCreateNode = ({
 }) => {
   const { createNodeField } = actions;
 
-  // replace absolute paths with relative for assets
-  const assetPaths = [["frontmatter", "image"]];
-  assetPaths.forEach(ap => (node = replacePath(node, ap)));
-
-  // prepare pages from markdown
-  if (node.internal.type === "MarkdownRemark") {
-    const slug = createFilePath({ node, getNode, basePath: "src/data" });
-    const instanceName = getNode(node.parent).sourceInstanceName;
-    createNodeField({ node, name: "type", value: instanceName });
-
-    if (contains(instanceName, ["services"])) {
-      createNodeField({ node, name: "slug", value: `/${instanceName}${slug}` });
-      createNodeField({
-        node,
-        name: "template",
-        value: node.frontmatter.template || `/${instanceName}Template.tsx`,
-      });
+  const { image } = node;
+  // tranform absolute path into relative path
+  if (image) {
+    if (node.internal.type.indexOf("Json") > -1) {
+      if (image.indexOf("/assets") === 0) {
+        node.image = path.relative(
+          path.dirname(getNode(node.parent).absolutePath),
+          path.join(__dirname, "..", "/static/", image)
+        );
+      }
     }
+  }
+
+  if (node.internal.type === "Wines") {
+    const slug = "/wines/" + node.wineId.replace(/ /g, "-");
+    createNodeField({ node, name: "slug", value: slug });
+  }
+
+  if (node.internal.type === "Wineries") {
+    const slug = "/wineries/" + node.wineryId.replace(/ /g, "-");
+    createNodeField({ node, name: "slug", value: slug });
+  }
+
+  if (node.internal.type === "MarkdownRemark") {
+    const parent = getNode(node.parent);
+    const [, lang] = parent.name.split(".");
+    const type = parent.sourceInstanceName;
+    const slug = [type, parent.relativeDirectory].join("/");
+
+    createNodeField({ node, name: "lang", value: lang });
+    createNodeField({ node, name: "type", value: type });
+    createNodeField({ node, name: "slug", value: "/" + slug });
   }
 };
