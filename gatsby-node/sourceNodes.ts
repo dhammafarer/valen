@@ -56,7 +56,7 @@ export const sourceNodes: GatsbySourceNodes = ({
             t.wineryId === wineryNode.wineryId
         );
         const { id, parent, children, internal, ...content } = Object.assign(
-          { lang: code },
+          { wineryId: wineryNode.id, lang: code },
           mergeTranslation(wineryNode, intl),
           intl
         );
@@ -89,7 +89,7 @@ export const sourceNodes: GatsbySourceNodes = ({
         const winery = getNodes().find(
           n =>
             n.internal.type === "Wineries" &&
-            n.wineryId === wineNode.wineryId &&
+            n.wineryId === wineNode.winery &&
             n.lang === code
         );
 
@@ -103,7 +103,7 @@ export const sourceNodes: GatsbySourceNodes = ({
         });
 
         const { id, parent, children, internal, ...content } = Object.assign(
-          { lang: code },
+          { wineId: wineNode.id, lang: code },
           mergeTranslation(wineNode, intl),
           { winery: winery ? winery.id : "", awards }
         );

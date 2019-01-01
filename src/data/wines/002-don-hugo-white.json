@@ -1,7 +1,7 @@
 {
-  "wineId": "002",
+  "id": "002",
   "name": "Don Hugo Blanco",
-  "wineryId": "bodega-faustino",
+  "winery": "bodega-faustino",
   "year": 2016,
   "kind": "white",
   "origin": "",

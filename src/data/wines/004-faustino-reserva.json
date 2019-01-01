@@ -1,7 +1,7 @@
 {
-  "wineId": "004",
+  "id": "004",
   "name": "Faustino Reserva",
-  "wineryId": "bodega-faustino",
+  "winery": "bodega-faustino",
   "year": 1986,
   "kind": "red",
   "origin": "",

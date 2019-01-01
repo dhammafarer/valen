@@ -1,7 +1,7 @@
 {
-  "wineId": "001",
+  "id": "001",
   "name": "Don Hugo Tinto",
-  "winery": "Bodega Faustino",
+  "winery": "bodega-faustino",
   "year": 2016,
   "kind": "red",
   "origin": "",

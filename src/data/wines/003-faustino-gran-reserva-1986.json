@@ -1,7 +1,7 @@
 {
-  "wineId": "003",
+  "id": "003",
   "name": "Faustino Gran Reserva 1986",
-  "wineryId": "bodega-faustino",
+  "winery": "bodega-faustino",
   "year": 1986,
   "kind": "red",
   "origin": "D.O. Ca. Rioja",
