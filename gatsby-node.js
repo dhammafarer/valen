@@ -1,3 +1,24 @@
+"use strict";
+
+require("source-map-support").install();
+require("ts-node").register({
+  compilerOptions: {
+    module: "commonjs",
+    target: "es2017",
+  },
+});
+
+const {
+  onCreatePage,
+  createPages,
+  onCreateNode,
+  sourceNodes,
+} = require("./gatsby-node/index.ts");
+
+exports.sourceNodes = sourceNodes;
+//exports.createPages = createPages;
+//exports.onCreatePage = onCreatePage;
+//exports.onCreateNode = onCreateNode;
 const { isNil, isEmpty, either, mergeWith, defaultTo } = require("ramda");
 const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
@@ -6,158 +27,6 @@ const languages = [
   { value: "en", text: "English" },
   { value: "zh", text: "中文" },
 ];
-
-const mergeTranslation = (a, b) =>
-  mergeWith((a, b) => (either(isNil, isEmpty)(b) ? a : b))(a, defaultTo({}, b));
-
-exports.sourceNodes = ({
-  actions,
-  getNodes,
-  createNodeId,
-  createContentDigest,
-}) => {
-  const { createNode } = actions;
-
-  languages.forEach(({ value }) => {
-    // add translations to awards
-    getNodes()
-      .filter(n1 => n1.internal.type === "AwardsJson")
-      .forEach(awardNode => {
-        const intl = getNodes().find(
-          t =>
-            t.internal.type === "AwardTranslationsJson" &&
-            t.award === awardNode.awardId &&
-            t.lang === value
-        );
-
-        const { id, parent, children, internal, ...content } = Object.assign(
-          {},
-          awardNode,
-          intl
-        );
-
-        const nodeMeta = {
-          id: createNodeId(`${awardNode.id}-${value}`),
-          parent: awardNode.parent,
-          children: [],
-          internal: {
-            type: `Awards`,
-            content: JSON.stringify(content),
-            contentDigest: createContentDigest(content),
-          },
-        };
-        const node = Object.assign({}, content, nodeMeta);
-        createNode(node);
-      });
-
-    // add translations to wineries
-    getNodes()
-      .filter(n1 => n1.internal.type === "WineriesJson")
-      .forEach(wineryNode => {
-        const intl = getNodes().find(
-          t =>
-            t.internal.type === "WineryTranslationsJson" &&
-            t.lang === value &&
-            t.wineryId === wineryNode.wineryId
-        );
-        const { id, parent, children, internal, ...content } = Object.assign(
-          { lang: value },
-          mergeTranslation(wineryNode, intl),
-          intl
-        );
-        const nodeMeta = {
-          id: createNodeId(`${wineryNode.id}-${value}`),
-          parent: wineryNode.parent,
-          children: [],
-          internal: {
-            type: `Wineries`,
-            content: JSON.stringify(content),
-            contentDigest: createContentDigest(content),
-          },
-        };
-
-        const node = Object.assign({}, content, nodeMeta);
-        createNode(node);
-      });
-
-    // add translations to wines
-    getNodes()
-      .filter(n1 => n1.internal.type === "WinesJson")
-      .forEach(wineNode => {
-        const intl = getNodes().find(
-          n2 =>
-            n2.internal.type === "WineTranslationsJson" &&
-            n2.wineId === wineNode.wineId &&
-            n2.lang === value
-        );
-
-        const winery = getNodes().find(
-          n =>
-            n.internal.type === "Wineries" &&
-            n.wineryId === wineNode.wineryId &&
-            n.lang === value
-        );
-
-        const awards = wineNode.awards.map(a => {
-          const node = getNodes().find(
-            n =>
-              n.internal.type === "Awards" && n.award === a && n.lang === value
-          );
-          return node ? node.id : null;
-        });
-
-        const { id, parent, children, internal, ...content } = Object.assign(
-          { lang: value },
-          mergeTranslation(wineNode, intl),
-          { winery: winery ? winery.id : null, awards }
-        );
-
-        const nodeMeta = {
-          id: createNodeId(`${wineNode.id}-${value}`),
-          parent: wineNode.parent,
-          children: [],
-          internal: {
-            type: `Wines`,
-            content: JSON.stringify(content),
-            contentDigest: createContentDigest(content),
-          },
-        };
-        const node = Object.assign({}, content, nodeMeta);
-        createNode(node);
-      });
-
-    // add translations to events
-    getNodes()
-      .filter(n1 => n1.internal.type === "EventsJson")
-      .forEach(eventNode => {
-        const md = getNodes().find(
-          t =>
-            t.internal.type === "MarkdownRemark" &&
-            t.frontmatter.event === eventNode.eventId &&
-            t.frontmatter.lang === value
-        );
-
-        const { id, parent, children, internal, ...content } = Object.assign(
-          {},
-          eventNode,
-          { md: md.id }
-        );
-
-        const nodeMeta = {
-          id: createNodeId(`${eventNode.id}-${value}`),
-          parent: eventNode.parent,
-          children: [],
-          internal: {
-            type: `Events`,
-            content: JSON.stringify(content),
-            contentDigest: createContentDigest(content),
-          },
-        };
-        const node = Object.assign({}, content, nodeMeta);
-        createNode(node);
-      });
-  });
-};
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
