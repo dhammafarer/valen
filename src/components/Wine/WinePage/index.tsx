@@ -130,7 +130,7 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
                   {wine.winery.country}
                 </Button>
               )}
-              {wine.kind && (
+              {wine.kind && wineKinds[wine.kind] && (
                 <Button
                   mr={2}
                   fontSize={3}
