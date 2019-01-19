@@ -4,11 +4,23 @@ import { Image } from "../../Image";
 import { Container } from "../../Container";
 import { Button } from "../../Button";
 import { InsertDriveFile } from "styled-icons/material/InsertDriveFile";
+import { FormattedMessage, defineMessages } from "react-intl";
+
+const wineKinds = defineMessages({
+  red: {
+    id: "wine.red",
+    defaultMessage: "red wine",
+  },
+});
 
 const Datasheet = styled(Box)`
   display: flex;
   align-items: center;
   flex-grow: 0;
+`;
+
+const Capitalized = styled.span`
+  text-transform: capitalize;
 `;
 
 const Icon = styled(InsertDriveFile)`
@@ -125,7 +137,9 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
                   outlined
                   to={wine.winery.fields.slug}
                 >
-                  {wine.kind}
+                  <Capitalized>
+                    <FormattedMessage {...wineKinds[wine.kind]} />
+                  </Capitalized>
                 </Button>
               )}
             </Box>
