@@ -1,5 +1,4 @@
 import * as React from "react";
-import { query } from "./query";
 import { styled, Box, Flex, Text, Card } from "primithemes";
 import { Image } from "../../Image";
 import { Container } from "../../Container";
@@ -73,18 +72,21 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
         alignItems="space-between"
       >
         <ImageWrapper
-          w={[1, 1 / 3, 1 / 2, 1 / 4, 1 / 3]}
+          w={[1, 1 / 3, 1 / 3, 1 / 4, 1 / 3]}
+          py={[3, 0, 2, 4]}
+          pr={[0, 4, 4, 0]}
+          pl={[0, 2, 2, 0]}
           justifyContent="center"
           alignItems="flex-start"
         >
           <Image
             imgStyle={{ objectFit: "contain" }}
-            style={{ width: "100%", maxWidth: 300 }}
+            style={{ width: "100%", maxWidth: 300, maxHeight: 800 }}
             fluid={wine.image}
           />
         </ImageWrapper>
 
-        <ContentWrapper w={[1, 2 / 3, 1 / 2, 3 / 4, 2 / 3]}>
+        <ContentWrapper w={[1, 2 / 3, 2 / 3, 3 / 4, 2 / 3]}>
           <Box>
             <Text is="h1" fontSize={[5, 5, 6]}>
               {wine.name}
@@ -143,18 +145,22 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
             </Section>
           )}
 
-          <Section mt={4}>
-            {wine.variety && <Spec label={"Variety"} text={wine.variety} />}
-            {wine.aging && <Spec label={"Aging"} text={wine.aging} />}
-            {wine.origin && <Spec label={"Origin"} text={wine.origin} />}
-            {wine.bottle && <Spec label={"Bottle"} text={wine.bottle} />}
-          </Section>
+          {(wine.variety || wine.aging || wine.origin || wine.bottle) && (
+            <Section mt={4}>
+              {wine.variety && <Spec label={"Variety"} text={wine.variety} />}
+              {wine.aging && <Spec label={"Aging"} text={wine.aging} />}
+              {wine.origin && <Spec label={"Origin"} text={wine.origin} />}
+              {wine.bottle && <Spec label={"Bottle"} text={wine.bottle} />}
+            </Section>
+          )}
 
-          <Section mt={4}>
-            {wine.eye && <Spec first label={"Eye"} text={wine.eye} />}
-            {wine.nose && <Spec label={"Nose"} text={wine.nose} />}
-            {wine.mouth && <Spec label={"Mouth"} text={wine.mouth} />}
-          </Section>
+          {(wine.eye || wine.nose || wine.mouth) && (
+            <Section mt={4}>
+              {wine.eye && <Spec first label={"Eye"} text={wine.eye} />}
+              {wine.nose && <Spec label={"Nose"} text={wine.nose} />}
+              {wine.mouth && <Spec label={"Mouth"} text={wine.mouth} />}
+            </Section>
+          )}
 
           {wine.pairing && (
             <Section mt={4}>
@@ -162,18 +168,20 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
             </Section>
           )}
 
-          <Section mt={4}>
-            <Box>
-              {wine.datasheet && (
-                <Button to={wine.datasheet.publicURL} outlined>
-                  <Datasheet>
-                    <Icon size={20} />
-                    Download Spec
-                  </Datasheet>
-                </Button>
-              )}
-            </Box>
-          </Section>
+          {wine.datasheet && (
+            <Section mt={4}>
+              <Box>
+                {wine.datasheet && (
+                  <Button to={wine.datasheet.publicURL} outlined>
+                    <Datasheet>
+                      <Icon size={20} />
+                      Download Spec
+                    </Datasheet>
+                  </Button>
+                )}
+              </Box>
+            </Section>
+          )}
         </ContentWrapper>
       </Sheet>
     </Container>
