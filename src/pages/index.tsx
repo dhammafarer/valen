@@ -4,7 +4,7 @@ import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n/withIntl";
 import { EventBanner } from "../components/Event/EventBanner";
-import { WineCard } from "../components/Wine/WineCard";
+import { WineCard, WineNode, WinesList } from "../components/Wine";
 import { Flex, Box } from "primithemes";
 import { Container } from "../components/Container";
 
@@ -23,23 +23,6 @@ interface EventNode {
       image: any;
     };
     htmlAst: any;
-  };
-}
-
-interface WineNode {
-  node: {
-    fields: {
-      slug: string;
-    };
-    name: string;
-    wineId: string;
-    winery: {
-      name: string;
-      fields: {
-        slug: string;
-      };
-    };
-    image: any;
   };
 }
 
@@ -64,32 +47,23 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
   const nextEvent = events[0];
   return (
     <Layout>
-      <Box m={3}>
-        <Container>
-          <EventBanner
-            image={nextEvent.node.frontmatter.image}
-            heading={nextEvent.node.frontmatter.name}
-            subheading={nextEvent.node.frontmatter.summary}
-            address={nextEvent.node.frontmatter.address}
-            dateStart={nextEvent.node.frontmatter.dateStart}
-            dateEnd={nextEvent.node.frontmatter.dateEnd}
-            slug={nextEvent.node.fields.slug}
-          />
-        </Container>
-      </Box>
+      {false && (
+        <Box m={3}>
+          <Container>
+            <EventBanner
+              image={nextEvent.node.frontmatter.image}
+              heading={nextEvent.node.frontmatter.name}
+              subheading={nextEvent.node.frontmatter.summary}
+              address={nextEvent.node.frontmatter.address}
+              dateStart={nextEvent.node.frontmatter.dateStart}
+              dateEnd={nextEvent.node.frontmatter.dateEnd}
+              slug={nextEvent.node.fields.slug}
+            />
+          </Container>
+        </Box>
+      )}
       <Container>
-        <Flex w={1} flexWrap="wrap">
-          {data.wines.edges.map(({ node }) => (
-            <Flex w={[1, 1 / 2, 1 / 3, 1 / 4]} p={3} key={node.wineId}>
-              <WineCard
-                name={node.name}
-                winery={node.winery}
-                image={node.image}
-                slug={node.fields.slug}
-              />
-            </Flex>
-          ))}
-        </Flex>
+        <WinesList wines={data.wines.edges} />
       </Container>
     </Layout>
   );

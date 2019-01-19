@@ -21,9 +21,6 @@ const Wines: React.SFC<Props> = props => {
         {props.data.wines.edges.map(({ node }) => (
           <div key={node.id}>
             <div>{node.name}</div>
-            <div>
-              <a href={node.datasheet.publicURL}>download</a>
-            </div>
           </div>
         ))}
       </div>

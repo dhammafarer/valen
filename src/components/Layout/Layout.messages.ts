@@ -4,7 +4,7 @@ export const app = defineMessages({
   title: {
     id: "app.title",
     defaultMessage: "Valen International",
-  }
+  },
 });
 
 export const contact = defineMessages({
@@ -38,6 +38,14 @@ export const nav = defineMessages({
   home: {
     id: "nav.home",
     defaultMessage: "Home",
+  },
+  wines: {
+    id: "nav.wines",
+    defaultMessage: "Wines",
+  },
+  events: {
+    id: "nav.events",
+    defaultMessage: "Events",
   },
   services: {
     id: "nav.services",

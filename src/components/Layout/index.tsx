@@ -47,9 +47,8 @@ interface Data {
 }
 
 const navItems = [
-  { to: "/", label: <FormattedMessage {...m.nav.home} /> },
+  { to: "/wines", label: <FormattedMessage {...m.nav.wines} /> },
   { to: "/about", label: <FormattedMessage {...m.nav.about} /> },
-  { to: "/services", label: <FormattedMessage {...m.nav.services} /> },
   { to: "/contact", label: <FormattedMessage {...m.nav.contact} /> },
 ];
 
