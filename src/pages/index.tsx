@@ -56,6 +56,7 @@ export interface IndexPageProps {
     };
   };
 }
+
 type Props = IndexPageProps & InjectedIntlProps;
 
 const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {

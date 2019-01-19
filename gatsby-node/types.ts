@@ -11,6 +11,7 @@ interface Actions {
   createNode: (node: any) => void;
   createPage: (page: Page) => void;
   deletePage: (page: Page) => void;
+  createParentChildLink: (param: { parent: Node; child: Node }) => void;
   createRedirect: (
     opts: {
       fromPath: string;
@@ -31,7 +32,13 @@ export type GatsbyOnCreatePage = (
 ) => void;
 
 export type GatsbyOnCreateNode = (
-  params: { node: any; getNode: any; actions: Actions }
+  params: {
+    node: any;
+    getNode: any;
+    actions: Actions;
+    createNodeId: any;
+    createContentDigest: any;
+  }
 ) => void;
 
 export type GatsbySourceNodes = (
@@ -39,6 +46,7 @@ export type GatsbySourceNodes = (
     createNodeId: any;
     createContentDigest: any;
     getNodes(): Node[];
+    getNode: any;
     actions: Actions;
   }
 ) => void;

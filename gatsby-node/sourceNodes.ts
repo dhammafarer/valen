@@ -1,6 +1,7 @@
 import { GatsbySourceNodes } from "./types";
 import { mergeWith, isNil, either, isEmpty, defaultTo } from "ramda";
 import { languages } from "../src/i18n";
+import { replaceAssetPath, processStringProperties } from "./helpers";
 
 const mergeTranslation = (a: any, b: any) =>
   mergeWith((a, b) => (either(isNil, isEmpty)(b) ? a : b))(a, defaultTo({}, b));
@@ -8,6 +9,7 @@ const mergeTranslation = (a: any, b: any) =>
 export const sourceNodes: GatsbySourceNodes = ({
   actions,
   getNodes,
+  getNode,
   createNodeId,
   createContentDigest,
 }) => {
@@ -27,8 +29,10 @@ export const sourceNodes: GatsbySourceNodes = ({
 
         const { id, parent, children, internal, ...content } = Object.assign(
           { lang: code, awardId: awardNode.id },
-          awardNode,
-          intl
+          processStringProperties(
+            [replaceAssetPath(getNode(awardNode.parent).absolutePath)],
+            mergeTranslation(awardNode, intl)
+          )
         );
 
         const nodeMeta = {
@@ -57,8 +61,10 @@ export const sourceNodes: GatsbySourceNodes = ({
         );
         const { id, parent, children, internal, ...content } = Object.assign(
           { wineryId: wineryNode.id, lang: code },
-          mergeTranslation(wineryNode, intl),
-          intl
+          processStringProperties(
+            [replaceAssetPath(getNode(wineryNode.parent).absolutePath)],
+            mergeTranslation(wineryNode, intl)
+          )
         );
         const nodeMeta = {
           id: createNodeId(`${wineryNode.id}-${code}`),
@@ -98,13 +104,15 @@ export const sourceNodes: GatsbySourceNodes = ({
             n =>
               n.internal.type === "Awards" && n.awardId === a && n.lang === code
           );
-          console.log(node.id);
           return node ? node.id : "";
         });
 
         const { id, parent, children, internal, ...content } = Object.assign(
           { wineId: wineNode.id, lang: code },
-          mergeTranslation(wineNode, intl),
+          processStringProperties(
+            [replaceAssetPath(getNode(wineNode.parent).absolutePath)],
+            mergeTranslation(wineNode, intl)
+          ),
           { winery: winery ? winery.id : "", awards }
         );
 
