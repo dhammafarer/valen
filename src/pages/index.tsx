@@ -4,8 +4,8 @@ import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n/withIntl";
 import { EventBanner } from "../components/Event/EventBanner";
-import { WineCard, WineNode, WinesList } from "../components/Wine";
-import { Flex, Box } from "primithemes";
+import { WineNode, WinesList } from "../components/Wine";
+import { Box } from "primithemes";
 import { Container } from "../components/Container";
 
 interface EventNode {
@@ -103,24 +103,7 @@ export const query = graphql`
     wines: allWines(filter: { lang: { eq: $locale } }) {
       edges {
         node {
-          wineId
-          fields {
-            slug
-          }
-          name
-          winery {
-            name
-            fields {
-              slug
-            }
-          }
-          image {
-            childImageSharp {
-              fluid(maxWidth: 200) {
-                ...GatsbyImageSharpFluid
-              }
-            }
-          }
+          ...WinesQueryFragment
         }
       }
     }

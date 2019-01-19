@@ -2,6 +2,8 @@ import * as React from "react";
 import { withIntl } from "../i18n/withIntl";
 import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
+import { WineNode, WineBrowser } from "../components/Wine";
+import { Container } from "../components/Container";
 
 interface Props {
   pageContext: {
@@ -9,21 +11,17 @@ interface Props {
   };
   data: {
     wines: {
-      edges: any[];
+      edges: WineNode[];
     };
   };
 }
 
-const Wines: React.SFC<Props> = props => {
+const Wines: React.SFC<Props> = ({ data }) => {
   return (
     <Layout>
-      <div>
-        {props.data.wines.edges.map(({ node }) => (
-          <div key={node.id}>
-            <div>{node.name}</div>
-          </div>
-        ))}
-      </div>
+      <Container>
+        <WineBrowser wines={data.wines.edges} />
+      </Container>
     </Layout>
   );
 };
@@ -31,18 +29,11 @@ const Wines: React.SFC<Props> = props => {
 export default withIntl(Wines);
 
 export const query = graphql`
-  query {
-    wines: allWines {
+  query WinesPageQuery($locale: String!) {
+    wines: allWines(filter: { lang: { eq: $locale } }) {
       edges {
         node {
-          id
-          name
-          winery {
-            name
-            fields {
-              slug
-            }
-          }
+          ...WinesQueryFragment
         }
       }
     }

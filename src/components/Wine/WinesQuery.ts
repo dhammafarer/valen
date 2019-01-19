@@ -1,0 +1,24 @@
+import { graphql } from "gatsby";
+
+export const query = graphql`
+  fragment WinesQueryFragment on Wines {
+    wineId
+    fields {
+      slug
+    }
+    name
+    winery {
+      name
+      fields {
+        slug
+      }
+    }
+    image {
+      childImageSharp {
+        fluid(maxWidth: 200) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`;
