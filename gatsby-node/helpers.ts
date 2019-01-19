@@ -15,7 +15,7 @@ export const processStringProperties = (fns: any[], content: any): any => {
     return content.map(x => processStringProperties(fns, x));
   }
   return mapObjIndexed((v, k) => {
-    if (typeof v !== "string") return processStringProperties(fns, v);
+    if (typeof v === "object") return processStringProperties(fns, v);
     if (typeof v === "string") {
       return reduce((a, b) => b(a, k), v, fns);
     } else return v;

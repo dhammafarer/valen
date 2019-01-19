@@ -13,6 +13,9 @@ interface Props {
     wines: {
       edges: WineNode[];
     };
+    wineries: {
+      edges: any[];
+    };
   };
 }
 
@@ -20,7 +23,7 @@ const Wines: React.SFC<Props> = ({ data }) => {
   return (
     <Layout>
       <Container>
-        <WineBrowser wines={data.wines.edges} />
+        <WineBrowser wineries={data.wineries.edges} wines={data.wines.edges} />
       </Container>
     </Layout>
   );
@@ -34,6 +37,13 @@ export const query = graphql`
       edges {
         node {
           ...WinesQueryFragment
+        }
+      }
+    }
+    wineries: allWineries(filter: { lang: { eq: $locale } }) {
+      edges {
+        node {
+          name
         }
       }
     }

@@ -4,6 +4,8 @@ export interface WineNode {
       slug: string;
     };
     name: string;
+    kind: string;
+    year: string;
     wineId: string;
     winery: {
       name: string;

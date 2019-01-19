@@ -4,14 +4,8 @@ import { Image } from "../../Image";
 import { Container } from "../../Container";
 import { Button } from "../../Button";
 import { InsertDriveFile } from "styled-icons/material/InsertDriveFile";
-import { FormattedMessage, defineMessages } from "react-intl";
-
-const wineKinds = defineMessages({
-  red: {
-    id: "wine.red",
-    defaultMessage: "red wine",
-  },
-});
+import { FormattedMessage } from "react-intl";
+import { wineKinds } from "../wineMessages";
 
 const Datasheet = styled(Box)`
   display: flex;
