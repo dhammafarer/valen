@@ -4,7 +4,7 @@ import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n/withIntl";
 import { EventBanner } from "../components/Event/EventBanner";
-import { WineNode, WinesList } from "../components/Wine";
+import { WineNode, WineBrowser } from "../components/Wine";
 import { Box } from "primithemes";
 import { Container } from "../components/Container";
 
@@ -37,6 +37,9 @@ export interface IndexPageProps {
     wines: {
       edges: WineNode[];
     };
+    wineries: {
+      edges: any[];
+    };
   };
 }
 
@@ -63,7 +66,7 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
         </Box>
       )}
       <Container>
-        <WinesList wines={data.wines.edges} />
+        <WineBrowser wineries={data.wineries.edges} wines={data.wines.edges} />
       </Container>
     </Layout>
   );
@@ -104,6 +107,13 @@ export const query = graphql`
       edges {
         node {
           ...WinesQueryFragment
+        }
+      }
+    }
+    wineries: allWineries(filter: { lang: { eq: $locale } }) {
+      edges {
+        node {
+          name
         }
       }
     }
