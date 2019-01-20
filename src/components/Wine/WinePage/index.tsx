@@ -114,22 +114,12 @@ export const WinePage: React.SFC<Props> = ({ wine }) => (
               >
                 {wine.winery.name}
               </Button>
-              {wine.winery.country && (
-                <Button
-                  mr={2}
-                  fontSize={3}
-                  outlined
-                  to={wine.winery.fields.slug}
-                >
-                  {wine.winery.country}
-                </Button>
-              )}
               {wine.kind && wineKinds[wine.kind] && (
                 <Button
                   mr={2}
                   fontSize={3}
                   outlined
-                  to={wine.winery.fields.slug}
+                  to={"/wines?kind=" + wine.kind}
                 >
                   <Capitalized>
                     <FormattedMessage {...wineKinds[wine.kind]} />

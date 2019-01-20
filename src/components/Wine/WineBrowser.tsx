@@ -8,6 +8,7 @@ import { contains } from "ramda";
 interface Props {
   wines: WineNode[];
   wineries: any[];
+  search?: string;
 }
 
 interface State {
@@ -35,6 +36,17 @@ class WineBrowser extends React.Component<Props, State> {
     const target = e.target;
     this.setState({ search: target.value });
   };
+
+  componentDidMount() {
+    if (this.props.search) {
+      const pairs = this.props.search
+        .substr(1)
+        .split("&")
+        .map(x => x.split("="));
+      const kind = pairs.find(p => p[0] === "kind");
+      if (kind) this.setState({ kinds: kind });
+    }
+  }
 
   handleCheckbox = (field: "kinds" | "wineries", e: any) => {
     const target = e.target;

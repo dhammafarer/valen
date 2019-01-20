@@ -9,6 +9,7 @@ interface Props {
   pageContext: {
     locale: string;
   };
+  location: any;
   data: {
     wines: {
       edges: WineNode[];
@@ -19,11 +20,15 @@ interface Props {
   };
 }
 
-const Wines: React.SFC<Props> = ({ data }) => {
+const Wines: React.SFC<Props> = ({ data, location }) => {
   return (
     <Layout>
       <Container>
-        <WineBrowser wineries={data.wineries.edges} wines={data.wines.edges} />
+        <WineBrowser
+          search={location.search}
+          wineries={data.wineries.edges}
+          wines={data.wines.edges}
+        />
       </Container>
     </Layout>
   );

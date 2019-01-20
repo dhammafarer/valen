@@ -144,8 +144,8 @@ const WineFilter: React.SFC<Props> = props => (
             Wineries
           </Text>
           {props.wineries.map(w => (
-            <Label>
-              <Flex my={2} key={w}>
+            <Label key={w}>
+              <Flex my={2}>
                 <Checkbox
                   type="checkbox"
                   name={w}
