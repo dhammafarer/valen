@@ -128,7 +128,6 @@ export const sourceNodes: GatsbySourceNodes = ({
         };
         const node = Object.assign({}, content, nodeMeta);
         createNode(node);
-        console.log(node);
       });
 
     // add translations to events

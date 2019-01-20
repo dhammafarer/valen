@@ -82,8 +82,8 @@ class WineBrowser extends React.Component<Props, State> {
     const wines = this.filterWines();
 
     return (
-      <Flex flexDirection={["column", "column", "row", "row"]} p={3} w={1}>
-        <Box pt={3} w={[1, 1, 1 / 2, 1 / 4, 1 / 5]}>
+      <Flex flexDirection={["column", "column", "row", "row"]} w={1}>
+        <Box w={[1, 1, 1 / 2, 1 / 4, 1 / 5]} p={3}>
           <WineFilter
             toggleFilter={this.toggleFilter}
             showFilter={this.state.showFilter}

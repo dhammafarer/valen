@@ -4,6 +4,8 @@ import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { WineNode, WineBrowser } from "../components/Wine";
 import { Container } from "../components/Container";
+import { Box } from "primithemes";
+import { Text } from "../components/Typography";
 
 interface Props {
   pageContext: {
@@ -24,11 +26,27 @@ const Wines: React.SFC<Props> = ({ data, location }) => {
   return (
     <Layout>
       <Container>
-        <WineBrowser
-          search={location.search}
-          wineries={data.wineries.edges}
-          wines={data.wines.edges}
-        />
+        <Box my={4}>
+          <Text fontSize={6} is="h1" color="text.dark" textAlign="center">
+            Valen Selection
+          </Text>
+          <Text
+            is="h3"
+            fontSize={4}
+            my={2}
+            color="text.main"
+            textAlign="center"
+          >
+            Browse Our Wines
+          </Text>
+        </Box>
+        <Box>
+          <WineBrowser
+            search={location.search}
+            wineries={data.wineries.edges}
+            wines={data.wines.edges}
+          />
+        </Box>
       </Container>
     </Layout>
   );

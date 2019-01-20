@@ -11,6 +11,7 @@ export const query = graphql`
     year
     winery {
       name
+      id
       fields {
         slug
       }

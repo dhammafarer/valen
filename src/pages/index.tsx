@@ -7,6 +7,7 @@ import { EventBanner } from "../components/Event/EventBanner";
 import { WineNode, WineBrowser } from "../components/Wine";
 import { Box } from "primithemes";
 import { Container } from "../components/Container";
+import { Text } from "../components/Typography";
 
 interface EventNode {
   node: {
@@ -50,7 +51,7 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
   const nextEvent = events[0];
   return (
     <Layout>
-      {false && (
+      {true && (
         <Box m={3}>
           <Container>
             <EventBanner
@@ -66,7 +67,17 @@ const IndexPage: React.SFC<Props> = ({ pageContext, data, intl }) => {
         </Box>
       )}
       <Container>
-        <WineBrowser wineries={data.wineries.edges} wines={data.wines.edges} />
+        <Box my={4}>
+          <Box mb={3}>
+            <Text is="h1" textAlign="center">
+              Valen Selection
+            </Text>
+          </Box>
+          <WineBrowser
+            wineries={data.wineries.edges}
+            wines={data.wines.edges}
+          />
+        </Box>
       </Container>
     </Layout>
   );

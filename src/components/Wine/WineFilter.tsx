@@ -61,7 +61,7 @@ const Filters = styled(Box)<{ show: boolean }>`
 const SearchInput = styled.input`
   margin-left: ${props => props.theme.sizes[2]};
   appearance: none;
-  width: 80%;
+  flex-grow: 1;
   border: none;
   background: transparent;
   font-family: ${props => props.theme.fonts.sans};
@@ -94,8 +94,8 @@ const WineFilter: React.SFC<Props> = props => (
       <Expand color="inherit" size={20} show={props.showFilter} />
     </TitleBar>
     <Filters show={props.showFilter}>
-      <Box w={1} px={3}>
-        <Search size={18} />
+      <Flex w={1} px={3} alignItems="center">
+        <Search style={{ flexShrink: 0 }} size={18} />
         <SearchInput
           type="text"
           value={props.search}
@@ -103,7 +103,7 @@ const WineFilter: React.SFC<Props> = props => (
           onChange={props.handleChange}
           name="search"
         />
-      </Box>
+      </Flex>
       <Flex flexDirection={["column", "row", "column"]}>
         <Box p={3} w={[1, 1 / 2, 1]}>
           <Text my={2} fontWeight={5}>

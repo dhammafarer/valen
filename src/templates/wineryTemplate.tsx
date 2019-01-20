@@ -2,6 +2,10 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Layout } from "../components/Layout";
 import { withIntl } from "../i18n";
+import { WinesList } from "../components/Wine";
+import { Container } from "../components/Container";
+import { Box } from "primithemes";
+import { Text } from "../components/Typography";
 
 interface WineryTemplateProps {
   pageContext: {
@@ -24,14 +28,25 @@ const WineryTemplate: React.SFC<WineryTemplateProps> = ({
 }) => {
   return (
     <Layout>
-      <div>{data.winery.name}</div>
-      <div>
-        {data.wines.edges
-          .filter(x => x.node.winery.id === data.winery.id)
-          .map(({ node }) => (
-            <div>{node.name}</div>
-          ))}
-      </div>
+      <Container>
+        <Box mt={3} p={3}>
+          <Text color="text.dark" fontSize={6} is="h1">
+            {data.winery.name}
+          </Text>
+        </Box>
+        <Box p={3}>
+          <Text color="text.main" is="h2" textAlign="center">
+            Available from this winery
+          </Text>
+          <Box my={3}>
+            <WinesList
+              wines={data.wines.edges.filter(
+                x => x.node.winery.id === data.winery.id
+              )}
+            />
+          </Box>
+        </Box>
+      </Container>
     </Layout>
   );
 };
@@ -47,10 +62,7 @@ export const query = graphql`
     wines: allWines(filter: { lang: { eq: $locale } }) {
       edges {
         node {
-          name
-          winery {
-            id
-          }
+          ...WinesQueryFragment
         }
       }
     }
